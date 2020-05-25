@@ -1,2 +1,3 @@
 import data_creation
-print(data_creation.create_data())
+data = data_creation.create_data()
+data.to_csv('data.csv')

@@ -9,7 +9,7 @@ leaving_students = int(total_students * 0.75)
 
 
 def create_datetime(hour, minutes):
-    date_time_obj = datetime.strptime(f'{hour}:{minutes}', '%H:%M')
+    date_time_obj = datetime.strptime(f'{hour}:{minutes}:00', '%H:%M:%S')
     return date_time_obj.time()
 
 
@@ -25,10 +25,10 @@ def generate_student_leaving_hour():
     return create_datetime(hour, minute)
 
 
-def generate_student_attempts(prob_to_fail):
+def generate_student_attempts():
     random_num = 0
     attempts_time = []
-    while random_num < prob_to_fail and len(attempts_time) <= 3:
+    while random_num < 1/(len(attempts_time)+2):
         attempts_time.append(5 + random.randrange(6))
         random_num = random.random()
     return attempts_time
@@ -43,7 +43,7 @@ def create_data():
         student_leaving_today = generate_students_by_day(current_students)
         for student in range(student_leaving_today):
             student_arrival_hour = generate_student_leaving_hour()
-            checks_lengths = generate_student_attempts(1 / 3)
+            checks_lengths = generate_student_attempts()
             if len(checks_lengths) <= 3:
                 current_students -= 1
             df = df.append({'Day': day_id, 'Hour': student_arrival_hour, 'Attempts': len(checks_lengths),
