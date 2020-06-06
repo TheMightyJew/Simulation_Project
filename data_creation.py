@@ -28,14 +28,13 @@ def generate_student_leaving_hour():
 def generate_student_attempts():
     random_num = 0
     attempts_time = []
-    while random_num < 1/(len(attempts_time)+2):
+    while random_num < 1 / (len(attempts_time) + 2):
         attempts_time.append(5 + random.randrange(6))
         random_num = random.random()
     return attempts_time
 
 
 def create_data():
-    dict_leavings = {}
     current_students = leaving_students
     df = pd.DataFrame(columns=['Day', 'Hour', 'Attempts', 'Checks_Lengths'])
     day_id = 1
