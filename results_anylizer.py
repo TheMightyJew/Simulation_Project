@@ -4,8 +4,10 @@ import numpy as np
 
 iterations_num = 1000
 topY = 0
+results = []
 for filename in ['Current_System', 'Improved_System']:
     with open(filename + '.csv', newline='') as csvfile:
+        iterations_avarages = []
         iterations = []
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
@@ -24,6 +26,12 @@ for filename in ['Current_System', 'Improved_System']:
         for i in range(len(iterations)):
             iterations[i].sort(key=lambda tup: tup[0])
             iterations[i] = iterations[i][:minLen]
+        for iteration in iterations:
+            iterSum = 0
+            for res in iteration:
+                iterSum += res[1]
+            iterations_avarages.append(iterSum/len(iteration))
+        results.append(iterations_avarages)
         average = []
 
         for i in range(minLen):
@@ -45,4 +53,10 @@ for filename in ['Current_System', 'Improved_System']:
             topY = max(average)
         plt.savefig(filename + '_ plot.png')
         plt.show()
+
+from scipy import stats
+np.random.seed(12345678)
+
+print(stats.ttest_ind(results[0], results[1]))
+print(stats.ttest_ind(results[0], results[1], equal_var = False))
 
