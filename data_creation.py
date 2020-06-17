@@ -4,7 +4,7 @@ import pandas as pd
 
 hours_range = (9, 14)
 students_per_day = 20
-total_students = 600
+total_students = 400
 leaving_students = int(total_students * 0.75)
 
 
@@ -34,8 +34,8 @@ def generate_student_attempts():
     return attempts_time
 
 
-def create_data():
-    current_students = leaving_students
+def create_data(total_students):
+    current_students = int(total_students * 0.75)
     df = pd.DataFrame(columns=['Day', 'Hour', 'Attempts', 'Checks_Lengths'])
     day_id = 1
     while current_students > 0:

@@ -4,6 +4,7 @@ import numpy
 import math
 from scipy.stats import chi2
 import ast
+import data_creation
 
 
 def get_deltas(df):
@@ -102,7 +103,8 @@ def check_hypothesis(data, func):
     print('Hypothesis', 'accepted' if statistic < chi2_critical else 'denied', 'because statistic(',
           round(statistic, 3), ') and critical(', round(chi2_critical, 3), ').')
 
-
+# data_creation.create_data(600).to_csv('east_data.csv')
+# data_creation.create_data(400).to_csv('west_data.csv')
 for filename in ['east_data', 'west_data']:
     print("Filename:", filename)
     df = pd.read_csv(filename + '.csv')
