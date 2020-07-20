@@ -44,7 +44,7 @@ for filename in ['Current_System', 'Improved_System']:
         plt.xlabel('Student Num', fontsize=15)
         plt.ylabel('Service Length', fontsize=15)
         plt.xticks(index, range(minLen), fontsize=8, rotation=30)
-        plt.title(filename + ' , avarage=' + str(int(sum(average)/len(average))))
+        plt.title(filename + ' , mean=' + str(int(sum(average)/len(average))) + ', variance=' + str(int(np.var(average))) + ', min|max=' + str(round(min(average))) + '|' + str(round(max(average))), fontsize = 12)
         axes = plt.gca()
         if topY > 0 :
             axes.set_ylim([0, topY])
@@ -55,7 +55,7 @@ for filename in ['Current_System', 'Improved_System']:
         plt.show()
 
 from scipy import stats
-np.random.seed(12345678)
+np.random.seed(42)
 
 print(stats.ttest_ind(results[0], results[1]))
 print(stats.ttest_ind(results[0], results[1], equal_var = False))

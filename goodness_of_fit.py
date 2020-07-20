@@ -94,10 +94,11 @@ def split_to_bins(data, min_quantity, func):
     return df
 
 
-def check_hypothesis(data, func):
+def check_hypothesis(data, func, filename):
     bins_df = split_to_bins(data, 5, func)
     bins_df['Oi-Ei'] = bins_df['Oi'] - bins_df['Ei']
     bins_df['(Oi-Ei)^2/Ei'] = bins_df['Oi-Ei'] ** 2 / bins_df['Ei']
+    bins_df.to_csv(filename+'.csv')
     statistic = bins_df['(Oi-Ei)^2/Ei'].sum()
     chi2_critical = chi2.ppf(0.99, len(bins_df) - 2)
     print('Hypothesis', 'accepted' if statistic < chi2_critical else 'denied', 'because statistic(',
@@ -109,8 +110,8 @@ for filename in ['east_data', 'west_data']:
     print("Filename:", filename)
     df = pd.read_csv(filename + '.csv')
     deltas = get_deltas(df)
-    check_hypothesis(deltas, exp_func)
+    check_hypothesis(deltas, exp_func, 'deltas_time_' + filename)
     print('m =', round(m, 4), '| lambda =', round(1 / m, 4))
     checks_time = get_check_time(df)
-    check_hypothesis(checks_time, uniform_func)
+    check_hypothesis(checks_time, uniform_func, 'checks_time_' + filename)
     print('b =', b, '| a =', a)
